@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+    jellyfin:
+        image: 'jellyfin/jellyfin:latest'
+        volumes:
+            - '/your/path/to/jellyfin/media:/media'
+            - '/your/path/to/jellyfin/cache:/cache'
+            - '/your/path/to/jellyfin/config:/config'
+        network_mode: 'host'
+        environment:
+            - JELLYFIN_PublishedServerUrl=http://example.com
+        restart: always
+
+    qbittorrent:
+        image: 'maltyxx/qbittorrent:latest'
+        volumes:
+            - '/your/path/to/jellyfin/media:/downloads'
+            - '/your/path/to/qbit/config:/config'
+        ports:
+            - '8080:8080/tcp'
+        environment:
+            - LEGAL=accept
+        container_name: qBittorrent
+        restart: always
